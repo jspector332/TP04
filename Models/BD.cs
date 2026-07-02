@@ -2,7 +2,6 @@ namespace TP04.Models;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
-
 public class BD
 {
     private string _connectionString = @"Server=localhost;DataBase = TP04;integrated Security = True;TrustServerCertificate=True;";
@@ -25,18 +24,32 @@ public class BD
         return Sobre;
     }
 
-    public Figuritas VerificarFigurita(int IdJugador){
-        Figuritas figu = null;
+    public int VerificarFigurita(int IdJugador){
+        int figu = null;
         using(SqlConnection connection = new SqlConnection(_connectionString)){
             string Query = "SELECT IdJugador From Figuritas WHERE IdJugador = @pIdJugador";
+            figu = connection.Query<int>(Query);
         }
         return figu;
     }
 
-    public void PegarFiguritas(){
-        using(SqlConnection connection = new SqlConnection(_connectionString)){
-        connection.Query<Figuritas>("UPDATE Figuritas SET Estado = 1 WHERE IdFigurita = Sobre");
+    public void PegarFiguritas(int idJugador){
+        if(VerificarFigurita(idJugador) == null){
+            string query = "INSERT INTO Figuritas(IdJugador, Cantidad, Estado) VALUES (@pidJugador, 0, 0)";
+            using(SqlConnection connection = new SqlConnection(_connectionString)){
+                connection.Execute(query);
+            }
+        }
+        else{
+            using(SqlConnection connection = new SqlConnection(_connectionString)){
+                string query = "UPDATE Figuritas SET Cantidad = Cantidad + 1 WHERE IdJugador = @idJugador";
+            }
         }
     }
 
+    public void PegarFigusXId(List<int> ids){
+        for( int i = 0, i <= ids.Count, i++ ){
+            PegarFiguritas(ids[i]);
+        }
+    }
 }
