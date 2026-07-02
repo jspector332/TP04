@@ -7,25 +7,26 @@ public class BD
     private string _connectionString = @"Server=localhost;DataBase = TP04;integrated Security = True;TrustServerCertificate=True;";
 
     public List<Jugadores> ObtenerJugadores(){
+        List<Jugadores> Jugadores = new List<Jugadores>();
         using(SqlConnection connection = new SqlConnection(_connectionString)){
-        List<Jugadores> Jugadores = connection.Query<Jugadores>("SELECT * FROM Jugadores").ToList();
+        Jugadores = connection.Query<Jugadores>("SELECT * FROM Jugadores").ToList();
         }
         return Jugadores;
     }
 
     public List<Jugadores> AbrirSobre(){
         Random rand = new Random();
-        List<Jugadores> Sobre;
+        List<Jugadores> Sobre = new List<Jugadores>();
         List<Jugadores> Jugadores = ObtenerJugadores();
         for (int i = 0; i < 5;i ++){
-            int numR = rand.Next(3,(Figus.Count + 1));
+            int numR = rand.Next(3,(Jugadores.Count + 1));
             Sobre.Add(Jugadores[numR]);
         }
         return Sobre;
     }
 
     public int VerificarFigurita(int IdJugador){
-        int figu = null;
+        int figu = 0;
         using(SqlConnection connection = new SqlConnection(_connectionString)){
             string Query = "SELECT IdJugador From Figuritas WHERE IdJugador = @pIdJugador";
             figu = connection.Query<int>(Query);
@@ -34,7 +35,7 @@ public class BD
     }
 
     public void PegarFiguritas(int idJugador){
-        if(VerificarFigurita(idJugador) == null){
+        if(VerificarFigurita(idJugador) == 0){
             string query = "INSERT INTO Figuritas(IdJugador, Cantidad, Estado) VALUES (@pidJugador, 0, 0)";
             using(SqlConnection connection = new SqlConnection(_connectionString)){
                 connection.Execute(query);
@@ -48,7 +49,7 @@ public class BD
     }
 
     public void PegarFigusXId(List<int> ids){
-        for( int i = 0, i <= ids.Count, i++ ){
+        for(int i = 0; i <= ids.Count; i++ ){
             PegarFiguritas(ids[i]);
         }
     }

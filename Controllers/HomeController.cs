@@ -13,6 +13,8 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+    BD BD = new BD();
+
     public IActionResult Index()
     {
         return View();
@@ -21,6 +23,11 @@ public class HomeController : Controller
     public IActionResult Privacy()
     {
         return View();
+    }
+
+    public IActionResult AbrirSobre(){
+        ViewBag.Sobre = BD.AbrirSobre();
+        return View("Paquete");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
