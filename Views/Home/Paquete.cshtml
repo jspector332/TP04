@@ -1,7 +1,14 @@
 <ul>
 @foreach (var f in ViewBag.Sobre){
     <li>
-        <img class = "imgJugador" src = @f.foto alt = "fJugador">
+        <img class = "imgJugador" src = @f.Foto alt = @f.Foto>
     </li>
 }
 </ul>
+
+<form action='@Url.Action("PegarFigus", "Home")' method="get" style="display:inline;">
+<button type="submit">Confirmar sobre</button>
+@foreach (var f in ViewBag.Sobre){
+    <input type="hidden" name="ids" value="@f.IdJugador">
+}
+</form>

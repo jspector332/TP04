@@ -29,6 +29,12 @@ public class HomeController : Controller
         ViewBag.Sobre = BD.AbrirSobre();
         return View("Paquete");
     }
+    
+    public IActionResult PegarFigus(int id1, int id2, int id3, int id4, int id5){
+        List<int> Ids = new List<int>{id1, id2, id3, id4, id5};
+        BD.PegarFigusXId(Ids);
+        return View("Index");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

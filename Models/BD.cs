@@ -9,7 +9,7 @@ public class BD
     public List<Jugadores> ObtenerJugadores(){
         List<Jugadores> Jugadores = new List<Jugadores>();
         using(SqlConnection connection = new SqlConnection(_connectionString)){
-        Jugadores = connection.Query<Jugadores>("SELECT * FROM Jugadores").ToList();
+            Jugadores = connection.Query<Jugadores>("SELECT * FROM Jugadores").ToList();
         }
         return Jugadores;
     }
@@ -19,7 +19,7 @@ public class BD
         List<Jugadores> Sobre = new List<Jugadores>();
         List<Jugadores> Jugadores = ObtenerJugadores();
         for (int i = 0; i < 5;i ++){
-            int numR = rand.Next(3,(Jugadores.Count + 1));
+            int numR = rand.Next(0,(Jugadores.Count));
             Sobre.Add(Jugadores[numR]);
         }
         return Sobre;
@@ -28,29 +28,32 @@ public class BD
     public int VerificarFigurita(int IdJugador){
         int figu = 0;
         using(SqlConnection connection = new SqlConnection(_connectionString)){
-            string Query = "SELECT IdJugador From Figuritas WHERE IdJugador = @pIdJugador";
-            figu = connection.Query<int>(Query);
+            string query = "SELECT IdJugador From Figuritas WHERE IdJugador = @IdJugador";
+            figu = connection.QueryFirstOrDefault<int>(query, new { IdJugador = IdJugador});
         }
         return figu;
     }
 
-    public void PegarFiguritas(int idJugador){
-        if(VerificarFigurita(idJugador) == 0){
-            string query = "INSERT INTO Figuritas(IdJugador, Cantidad, Estado) VALUES (@pidJugador, 0, 0)";
+    public void PegarFiguritas(int IdJugador){
+          Console.WriteLine("!!!!!!!!!" + IdJugador);
+        if(VerificarFigurita(IdJugador) == 0){
+            string query = "INSERT INTO Figuritas(IdJugador, Cantidad, Estado) VALUES (@IdJugador, 0, 0)";
             using(SqlConnection connection = new SqlConnection(_connectionString)){
-                connection.Execute(query);
+                connection.Execute(query, new { IdJugador });
             }
         }
         else{
             using(SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = "UPDATE Figuritas SET Cantidad = Cantidad + 1 WHERE IdJugador = @idJugador";
+                string query = "UPDATE Figuritas SET Cantidad = Cantidad + 1 WHERE IdJugador = @IdJugador";
             }
         }
     }
 
     public void PegarFigusXId(List<int> ids){
-        for(int i = 0; i <= ids.Count; i++ ){
+        
+        for(int i = 0; i < ids.Count; i++ ){
             PegarFiguritas(ids[i]);
+            Console.WriteLine("!!!!!!!!!!!!!!!!" + ids[i]);
         }
     }
 }
