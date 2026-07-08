@@ -1,7 +1,7 @@
 <ul>
 @foreach (var f in ViewBag.Sobre){
     <li>
-        <img class = "imgJugador" src = @f.Foto alt = @f.Foto>
+        <img src = "~/@f.Foto" alt = "@f.Foto">
     </li>
 }
 </ul>

@@ -35,7 +35,7 @@ public class BD
     }
 
     public void PegarFiguritas(int IdJugador){
-          Console.WriteLine("!!!!!!!!!" + IdJugador);
+        Console.WriteLine("!!!!!!!!!" + IdJugador);
         if(VerificarFigurita(IdJugador) == 0){
             string query = "INSERT INTO Figuritas(IdJugador, Cantidad, Estado) VALUES (@IdJugador, 0, 0)";
             using(SqlConnection connection = new SqlConnection(_connectionString)){
@@ -43,17 +43,17 @@ public class BD
             }
         }
         else{
+            string query = "UPDATE Figuritas SET Cantidad = Cantidad + 1 WHERE IdJugador = @IdJugador";
             using(SqlConnection connection = new SqlConnection(_connectionString)){
-                string query = "UPDATE Figuritas SET Cantidad = Cantidad + 1 WHERE IdJugador = @IdJugador";
+                connection.Execute(query, new { IdJugador });
             }
         }
     }
 
     public void PegarFigusXId(List<int> ids){
-        
         for(int i = 0; i < ids.Count; i++ ){
             PegarFiguritas(ids[i]);
-            Console.WriteLine("!!!!!!!!!!!!!!!!" + ids[i]);
+            Console.WriteLine("!!!!!!!!!!!!!!!!Ids:" + ids[i]);
         }
     }
 }
