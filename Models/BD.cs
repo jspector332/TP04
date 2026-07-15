@@ -35,7 +35,6 @@ public class BD
     }
 
     public void PegarFiguritas(int IdJugador){
-        Console.WriteLine("!!!!!!!!!" + IdJugador);
         if(VerificarFigurita(IdJugador) == 0){
             string query = "INSERT INTO Figuritas(IdJugador, Cantidad, Estado) VALUES (@IdJugador, 0, 0)";
             using(SqlConnection connection = new SqlConnection(_connectionString)){
@@ -53,7 +52,14 @@ public class BD
     public void PegarFigusXId(List<int> ids){
         for(int i = 0; i < ids.Count; i++ ){
             PegarFiguritas(ids[i]);
-            Console.WriteLine("!!!!!!!!!!!!!!!!Ids:" + ids[i]);
         }
+    }
+
+    public List<Figuritas> ObtenerFiguritas(){
+        List<Figuritas> Figuritas = new List<Figuritas>();
+        using(SqlConnection connection = new SqlConnection(_connectionString)){
+            Figuritas = connection.Query<Figuritas>("SELECT * FROM Figuritas").ToList();
+        }
+        return Figuritas;
     }
 }

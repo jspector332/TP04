@@ -6,7 +6,7 @@
 }
 </ul>
 
-<form action='@Url.Action("PegarFigus", "Home")' method="get" style="display:inline;">
+<form action='@Url.Action("PegarFigus", "Home")' method="post" style="display:inline;">
 <button type="submit">Confirmar sobre</button>
 @foreach (var f in ViewBag.Sobre){
     <input type="hidden" name="ids" value="@f.IdJugador">

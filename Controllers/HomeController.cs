@@ -24,15 +24,21 @@ public class HomeController : Controller
     {
         return View();
     }
-
+    [HttpPost]
     public IActionResult AbrirSobre(){
         ViewBag.Sobre = BD.AbrirSobre();
         return View("Paquete");
     }
-    
+    [HttpPost]
     public IActionResult PegarFigus(List<int> ids){
         BD.PegarFigusXId(ids);
-        return View("Index");
+        return RedirectToAction("Index");
+    }
+
+    public IActionResult VerAlbum(){
+        ViewBag.Figuritas = BD.ObtenerFiguritas();
+        ViewBag.Jugadores = BD.ObtenerJugadores();
+        return View("Album");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
