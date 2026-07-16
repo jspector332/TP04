@@ -62,4 +62,12 @@ public class BD
         }
         return Figuritas;
     }
+
+    public List<Selecciones> ObtenerSelecciones(){
+        List<Selecciones> Selecciones = new List<Selecciones>();
+        using(SqlConnection connection = new SqlConnection(_connectionString)){
+            Selecciones = connection.Query<Selecciones>("SELECT * FROM Selecciones").ToList();
+        }
+        return Selecciones;
+    }
 }

@@ -67,6 +67,10 @@ button{
   width: 100%;
 }
 
+li{
+  width: 40%;
+}
+
 ul li{
   text-decoration: none;
   list-style: none;
@@ -80,4 +84,28 @@ button:hover{
   margin-left: 20%;
   margin-top: 12%;
   width: 60%;
+}
+
+ul {
+  display: flex;
+  gap: 4%;
+  list-style: none;
+}
+
+.divImagenesS{
+  width: 100%;
+  margin-top: 50%;
+}
+
+.divImagenesS img{
+  width: 100%;
+}
+
+.confSobre{
+  margin-left: 45%;
+}
+
+.imgSele{
+  display: flex;
+  justify-content: center;
 }

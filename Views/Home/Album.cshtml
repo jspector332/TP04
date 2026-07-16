@@ -2,14 +2,21 @@
 <button class="albumBoton" type="submit">Volver A Inicio</button>
 </form>
 
-@foreach (Jugadores j in ViewBag.Jugadores){
-    <h2>@j.NombreCompleto</h2>
-    @foreach (Figuritas f in ViewBag.Figuritas){
-        if(j.IdJugador == f.IdJugador){
-        <h2>Repetidas: @f.Cantidad</h2>
-        <div class="divImagenes">
-        <img src = "~/@j.Foto" alt = "@j.Foto">
-        </div>
+@foreach (Selecciones s in ViewBag.Selecciones){
+    <div class="imgSele">
+    <img src="~/@s.FotoSeleccion" src=>
+    </div>
+    @foreach (Jugadores j in ViewBag.Jugadores){
+        if(j.IdSeleccion == s.IdSeleccion){
+        <h2>@j.NombreCompleto</h2>
+            @foreach (Figuritas f in ViewBag.Figuritas){
+                if(j.IdJugador == f.IdJugador){
+                <h2>Repetidas: @f.Cantidad</h2>
+                <div class="divImagenes">
+                <img src = "~/@j.Foto" alt = "@j.Foto">
+                </div>
+                }
+            }
         }
     }
 }
