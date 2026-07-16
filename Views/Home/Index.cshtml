@@ -1,7 +1,6 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿<h2>Bienvenido</h2>
 
+<div class="formIndex">
 <form action='@Url.Action("AbrirSobre", "Home")' method="post" style="display:inline;">
 <button type="submit">Abrir Sobre</button>
 </form>
@@ -9,6 +8,9 @@
 <form action='@Url.Action("VerAlbum", "Home")' method="get" style="display:inline;">
 <button type="submit">Abrir Album</button>
 </form>
+</div>
+
+<img class="enzo" src="~/portadaaura.png" alt="">
 
 
 
